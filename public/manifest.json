@@ -1,0 +1,8 @@
+/**
+*  @todo CHROME推播_GCM註冊
+*/
+{
+  "name": "WEB Push Notifications",
+  "gcm_sender_id": "1036516174283"
+}
+

@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <div id="container">
                         <div id="push">
-                            <img id="push-icon" src="" placeholder="/images/push.png">
+                            <img id="push-icon" src="/images/push.png" placeholder="/images/push.png">
                             <p id="x">x</p>
                             <p id="push-title" alt="title" placeholder="標題">標題</p>
                             <p id="push-message" alt="body" placeholder="內文">內文</p>
