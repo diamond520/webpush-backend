@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
 		// $this->call('PusherTableSeeder');
         DB::table('pusher')->insert([
-            'name' => 'diamond',
-            'email' => 'diamond.cc@gmail.com',
-            'password' => Hash::make('password'),
+            'name' => 'sanlih',
+            'email' => 'sanlih@gmail.com',
+            'password' => Hash::make('sanlih21'),
         ]);
     }
 }

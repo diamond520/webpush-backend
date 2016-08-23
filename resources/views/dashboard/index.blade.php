@@ -8,12 +8,15 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    <table class="table">
+                    <table id="datatable" class="table display">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>標題</th>
                                 <th>內容</th>
+                                <th>露出</th>
+                                <th>點擊</th>
+                                <th>點擊率(%)</th>
                                 <th>時間</th>
                                 <th>查看</th>
                             </tr>
@@ -25,6 +28,9 @@
                                 <td>{{ $i }}</td>
                                 <td>{{ $push->title }}</td>
                                 <td>{{ $push->body }}</td>
+                                <th>0</th>
+                                <th>0</th>
+                                <th>0.0</th>
                                 <td>{{ $push->created_at }}</td>
                                 <td><a href="{{ url('/dashboard/'.$push->id) }}">detail</a></td>
                             </tr>
@@ -37,4 +43,12 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+$(document).ready( function () {
+    $('#datatable').DataTable();
+} );
+</script>
 @endsection

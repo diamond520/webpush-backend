@@ -27,9 +27,14 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/dashboard', 'PushController@index');
+// Route::get('/dashboard', 'PushController@index');
 
 Route::group(array('prefix' => 'dashboard'), function(){
+    Route::get('/', 'ReportController@index');
+    Route::get('/{post_id}', 'ReportController@detail');
+});
+
+Route::group(array('prefix' => 'push'), function(){
     Route::get('/', 'PushController@index');
-    Route::get('/{post_id}', 'PushController@detail');
+    Route::post('/add', 'PushController@add');
 });

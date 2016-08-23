@@ -14,9 +14,9 @@ class CreatePusherTable extends Migration
     {
         Schema::create('pusher', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50)->unique()->comment = "login account";
-            $table->string('password', 50)->comment = "passwd";
-            $table->string('email', 100)->comment = "user email";
+            $table->string('name', 255)->unique()->comment = "login account";
+            $table->string('password', 255)->comment = "passwd";
+            $table->string('email', 255)->comment = "user email";
             $table->string('group', 50)->nullable()->comment = "user group";
             $table->string('ip_address', 50)->nullable()->comment = "user login ip_address";
             $table->rememberToken();
