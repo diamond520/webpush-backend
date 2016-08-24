@@ -103,12 +103,13 @@ class PushController extends Controller
 
     public function send_push_notification($registation_id) 
     {
-         
+        // fcm endpoint
         $url = 'https://fcm.googleapis.com/fcm/send';
         
         $registation_ids = array(
             $registation_id
         );
+        
         $data = "testing data";
 
         $fields = array(

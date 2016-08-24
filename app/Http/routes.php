@@ -29,16 +29,26 @@ Route::get('/home', 'HomeController@index');
 
 // Route::get('/dashboard', 'PushController@index');
 
-Route::group(array('prefix' => 'dashboard'), function(){
+// Route::group(['before'=>'auth'], function(){
+//     Route::get('post', 'HomeController@index');
+//     Route::get('post/create', 'HomeController@create');
+//     Route::post('post', 'HomeController@store');
+//     Route::get('post/{id}', 'HomeController@show');
+//     Route::get('post/{id}/edit', 'HomeController@edit');
+//     Route::put('post/{id}', 'HomeController@update');
+//     Route::delete('post/{id}', 'HomeController@destroy');
+// });
+
+Route::group(['prefix' => 'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/', 'ReportController@index');
     Route::get('/{push_id}', 'ReportController@detail');
 });
 
-Route::group(array('prefix' => 'push'), function(){
+Route::group(['prefix' => 'push', 'middleware'=>'auth'], function(){
     Route::get('/', 'PushController@index');
     Route::post('/add', 'PushController@add');
     Route::get('/get/{push_id}', 'PushController@get_push');
-    Route::get('/aaa', 'PushController@send_push');
+    Route::get('/test', 'PushController@send_push');
 });
 
 Route::get('/reg/{client_id}', 'RegController@reg');

@@ -28,7 +28,7 @@ self.addEventListener('push', function(event) {
 
       var title = data.title || "";
       var message = data.message || "";
-      var icon = data.icon || "images/HODO.jpg";
+      var icon = data.icon || "images/mtv.jpg";
       var click_url = data.url || "https://www.mtv.com.tw/";
       var notificationData = {
                url: click_url
