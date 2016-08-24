@@ -11,17 +11,17 @@ class ReportController extends Controller
 
     public function index()
     {
-    	$pusher = Auth::user();
-    	$pushes = Push::where('pusher_id', $pusher->id)
-    					->orderBy('created_at', 'desc')
-    					->get();
-    	// return $pushes;
+        $pusher = Auth::user();
+        $pushes = Push::where('pusher_id', $pusher->id)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+        // return $pushes;
         return view('dashboard.index', ['pushes' => $pushes]);
     }
 
     public function detail($push_id)
     {
-    	$push = Push::where('id', $push_id)->first();
+        $push = Push::where('id', $push_id)->first();
         // return $push;
         return view('dashboard.report', ['push' => $push]);
     }

@@ -17,7 +17,6 @@ class CreateSvrKeyTable extends Migration
             $table->string('svr_key');
             $table->string('sender_id');
             $table->timestamp('created_at');
-
         });
         DB::table('svr_key')->insert(array('svr_key' => 'AIzaSyAnqDQhjNQiXO_PdO6-uU5uFH6reH6Cims', 'sender_id' => '926974294337') );
     }

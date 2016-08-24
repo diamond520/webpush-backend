@@ -20,6 +20,7 @@ class CreatePusherTable extends Migration
             $table->string('group', 50)->nullable()->comment = "user group";
             $table->string('ip_address', 50)->nullable()->comment = "user login ip_address";
             $table->rememberToken();
+            $table->timestamp('updated_at');
             $table->timestamp('created_at');
         });
     }

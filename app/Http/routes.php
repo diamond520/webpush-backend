@@ -31,10 +31,14 @@ Route::get('/home', 'HomeController@index');
 
 Route::group(array('prefix' => 'dashboard'), function(){
     Route::get('/', 'ReportController@index');
-    Route::get('/{post_id}', 'ReportController@detail');
+    Route::get('/{push_id}', 'ReportController@detail');
 });
 
 Route::group(array('prefix' => 'push'), function(){
     Route::get('/', 'PushController@index');
     Route::post('/add', 'PushController@add');
+    Route::get('/get/{push_id}', 'PushController@get_push');
+    Route::get('/aaa', 'PushController@send_push');
 });
+
+Route::get('/reg/{client_id}', 'RegController@reg');

@@ -22,6 +22,7 @@ class CreateWebUserTable extends Migration
             $table->string('os_version', 50)->nullable()->comment = "device os version";
             $table->string('browser', 50)->nullable()->comment = "device browser";
             $table->string('browser_version', 50)->nullable()->comment = "device browser version";
+            $table->timestamp('updated_at');
             $table->timestamp('created_at');
         });
     }
