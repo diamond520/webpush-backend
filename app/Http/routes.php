@@ -44,11 +44,16 @@ Route::group(['prefix' => 'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/{push_id}', 'ReportController@detail');
 });
 
+
+Route::get('/push/get/{push_id}', 'PushController@get_push');
+//Route::get('/push/latest', 'PushController@latest');
+
 Route::group(['prefix' => 'push', 'middleware'=>'auth'], function(){
     Route::get('/', 'PushController@index');
     Route::post('/add', 'PushController@add');
-    Route::get('/get/{push_id}', 'PushController@get_push');
+//    Route::get('/get/{push_id}', 'PushController@get_push');
     Route::get('/test', 'PushController@send_push');
 });
-
-Route::get('/reg/{client_id}', 'RegController@reg');
+Route::get('/reg/{client_id}', ['middleware' => 'cors','uses' => 'RegController@reg']);
+Route::get('/push/latest', ['middleware' => 'cors','uses' => 'PushController@latest']);
+//Route::get('/reg/{client_id}', 'RegController@reg');

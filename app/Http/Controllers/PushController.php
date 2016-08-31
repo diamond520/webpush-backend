@@ -54,6 +54,7 @@ class PushController extends Controller
 
     public function get_push($push_id)
     {
+/*
         $validator = Validator::make(array('push_id' => $push_id) , [
             'push_id' => 'required|unique:mysql.push_list,id'
         ]);
@@ -61,15 +62,22 @@ class PushController extends Controller
             // invalid push_id, return default push msg
             return "fail";
         }
+*/
         $push = Push::where('pusher_id', $push_id)
                         ->first();
         return $push;
     }
 
+    public function latest() 
+    {
+	$push = Push::orderBy('id', 'desc')
+                        ->first();
+	return $push;
+    }
+
     public function send_push()
     {
         $apiKey = "AIzaSyAnqDQhjNQiXO_PdO6-uU5uFH6reH6Cims";
-
         $users = DB::table('web_user')
                         ->select(DB::raw('registation_id as id'))
                         ->where('state', '=', 1);
@@ -88,7 +96,7 @@ class PushController extends Controller
                 $index = ($i * $sendMax) + $j;
                 if($index < $count)
                 {   
-                    $row = $ids[$index];
+		    $row = $ids[$index];
                     array_push($regID, $row->id);
                 }
                 else
@@ -96,8 +104,7 @@ class PushController extends Controller
                     break;
                 }
             }
-
-            $this->send_push($regID);
+            $this->send_push_notification($regID);
         }
     }
 
@@ -106,15 +113,13 @@ class PushController extends Controller
         // fcm endpoint
         $url = 'https://fcm.googleapis.com/fcm/send';
         
-        $registation_ids = array(
-            $registation_id
-        );
+        $registation_ids = $registation_id;
         
-        $data = "testing data";
+        $data = 'data';
 
         $fields = array(
             'registration_ids' => $registation_ids,
-            'data' => $data,
+            'data' => array("data" => $data),
             'time_to_live' => 60
         );
  
@@ -137,10 +142,11 @@ class PushController extends Controller
 
         $result = curl_exec($ch);
         if ($result === FALSE) {
+	    return 'fail';
             die('Curl failed: ' . curl_error($ch));
         }
- 
         curl_close($ch);
+	return $result;
     }
 
 }
