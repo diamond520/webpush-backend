@@ -49,7 +49,7 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready( function () {
-    $('#datatable').DataTable('bSort': false);
+    $('#datatable').DataTable({'bSort': false});
 } );
 </script>
 @endsection
