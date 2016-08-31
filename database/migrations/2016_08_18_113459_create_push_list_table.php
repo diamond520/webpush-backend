@@ -20,7 +20,6 @@ class CreatePushListTable extends Migration
             $table->string('action')->nullable()->comment = "action url";
             $table->integer('pusher_id')->unsigned()->comment = "pusher";
             $table->foreign('pusher_id')->references('id')->on('pusher');
-            $table->string('ip_address', 50)->nullable()->comment = "user login ip_address";
             $table->timestamp('updated_at');
             $table->timestamp('created_at');
         });

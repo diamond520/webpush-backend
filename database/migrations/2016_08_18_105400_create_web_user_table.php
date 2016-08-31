@@ -14,7 +14,7 @@ class CreateWebUserTable extends Migration
     {
         Schema::create('web_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('registation_id', 100)->unique()->comment = "gcm reg id";
+            $table->string('registation_id', 255)->unique()->comment = "gcm reg id";
             $table->boolean('state')->comment = "is subscribe: boolean";
             $table->string('channel')->default('0')->comment = "user channel, default 0";
             $table->string('device', 50)->nullable()->comment = "user device";

@@ -18,13 +18,12 @@
                                 <th>點擊</th>
                                 <th>點擊率(%)</th>
                                 <th>時間</th>
-                                <th>查看</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $i=1; ?>
                             @foreach ($pushes as $push)
-                            <tr>
+                            <tr data-href="{{ url('/dashboard/'.$push->id) }}" class="clickable">
                                 <td>{{ $i }}</td>
                                 <td>{{ $push->title }}</td>
                                 <td>{{ $push->body }}</td>
@@ -32,7 +31,6 @@
                                 <th>0</th>
                                 <th>0.0</th>
                                 <td>{{ $push->created_at }}</td>
-                                <td><a href="{{ url('/dashboard/'.$push->id) }}">detail</a></td>
                             </tr>
                             <?php $i++; ?>
                             @endforeach
@@ -49,6 +47,9 @@
 <script type="text/javascript">
 $(document).ready( function () {
     $('#datatable').DataTable();
+    $('#datatable tbody tr').on('click', function(){
+        window.document.location = $(this).data("href");
+    });
 } );
 </script>
 @endsection
