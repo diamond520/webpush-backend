@@ -292,9 +292,9 @@ var clock = jQuery("#multi").radialMultiProgress("init", {
   'fill': 25,
   'font-size': 14,
   'data': [
-    {'color': "#2DB1E4", 'range': [0, 12]},
-    {'color': "#9CCA13", 'range': [0, 59]},
-    {'color': "#A4075E", 'range': [0, 59]}
+    {'color': "#555", 'range': [0, 12]}, //"#2DB1E4"
+    {'color': "#999", 'range': [0, 59]}, //"#9CCA13"
+    {'color': "#CCC", 'range': [0, 59]} //"#A4075E"
   ]
 });
 
@@ -302,7 +302,7 @@ var startClock = function() {
   var dh, dm, ds;
   setInterval(function() {
     var date = new Date(),
-        h = date.getHours() % 12,
+        h = date.getHours(), //% 12,
         m = date.getMinutes(),
         s = date.getSeconds();
     if (dh !== h) { clock.radialMultiProgress("to", {
