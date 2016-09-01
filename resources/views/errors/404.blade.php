@@ -300,7 +300,7 @@ var startClock = function() {
   var dh, dm, ds;
   setInterval(function() {
     var date = new Date(),
-        h = date.getHours(), //% 12,
+        h = date.getHours() % 12,
         m = date.getMinutes(),
         s = date.getSeconds();
     if (dh !== h) { clock.radialMultiProgress("to", {
