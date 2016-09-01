@@ -13,9 +13,9 @@ class AddImpClickCTRToPushListTable extends Migration
     public function up()
     {
         Schema::table('push_list', function (Blueprint $table) {
-            $table->integer('impression')->after('pusher_id');
-            $table->integer('click')->after('impression');
-            $table->integer('ctr')->after('click');
+            $table->integer('impression')->default(0)->after('pusher_id');
+            $table->integer('click')->default(0)->after('impression');
+            $table->integer('ctr')->default(0)->after('click');
         });
     }
 
