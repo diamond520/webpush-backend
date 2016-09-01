@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Be right back.</title>
+        <title>404</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <script   src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
@@ -66,8 +66,6 @@
                 margin: 0 0 10px 0; 
             }
 
-
-
             @media (min-width: 481px) {
                 section {
                     width: 45%;
@@ -94,7 +92,7 @@
             </div>
             <div></div>
             <div class="txt">
-                <div style="clear: both;">一切都是假的！ ಠ╭╮ಠ</div>
+                <div style="clear: both;">There must be something wrong with my eyes. ಠ╭╮ಠ</div>
             </div>
         </div>
     </body>
