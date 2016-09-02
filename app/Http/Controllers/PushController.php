@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Models\Push;
 use App\Models\WebUser;
+use App\Jobs\SendPush;
 use Auth;
 use DB;
 use Validator;
@@ -22,7 +23,7 @@ class PushController extends Controller
 
 	public function add(Request $request)
 	{
-		$t1 = microtime(true);
+
 		if (! $request->isMethod('post')) {
 			// is not post redirect to url: /
 			return ;
@@ -38,7 +39,7 @@ class PushController extends Controller
 					->withErrors($validator)
 					->withInput();
 		}
-		$t2 = microtime(true);
+
 		$push = new Push;
 		$push->title = $request->input('title');
 		$push->body = $request->input('body');
@@ -47,26 +48,12 @@ class PushController extends Controller
 		$push->pusher_id = Auth::user()->id;
 
 		$push->save();
-		$t3 = microtime(true);
-		$this->send_push();
 
-		$t4 = microtime(true);
+		// $this->send_push();
+        $job = (new SendPush());
+        $this->dispatch($job);
 
-		$tt1 = ($t2 - $t1);
-		$tt2 = ($t3 - $t2);
-		$tt3 = ($t4 - $t3);
-		$tt = ($t4 - $t1);
-
-		echo "$t1<br/>";
-		echo "$t2<br/>";
-		echo "$t3<br/>";
-		echo "$t4<br/>";
-		echo "<br/>";
-		echo "$tt1<br/>";
-		echo "$tt2<br/>";
-		echo "$tt3<br/>";
-		echo "exec time(s) : $tt";
-		return;
+		return 'done';
 		return Redirect::to('/dashboard/'.$push->id);
 	}
 
@@ -86,7 +73,7 @@ class PushController extends Controller
 
 	public function send_push()
 	{
-		$t1 = microtime(true);
+		// $t1 = microtime(true);
 		$apiKey = "AIzaSyAnqDQhjNQiXO_PdO6-uU5uFH6reH6Cims";
 		$users = DB::table('web_user')
 						->select(DB::raw('registation_id as id'))
@@ -97,7 +84,7 @@ class PushController extends Controller
 		$sendMax = 1000;  
 		$sendLoop = ceil($count / $sendMax);
 
-		$t2 = microtime(true);
+		// $t2 = microtime(true);
 
 		for($i = 0 ; $i < $sendLoop ; $i++)
 		{
@@ -127,16 +114,16 @@ class PushController extends Controller
 				$this->del_gcm_reg_id($del_id);
 			}
 		}
-		$t3 = microtime(true);
-		$ss1 = $t2 - $t1;
-		$ss2 = $t3 - $t2;
-		$ss = $t3-$t1;
-		echo "s1: $t1<br/>";
-		echo "s2: $t2<br/>";
-		echo "s3: $t3<br/>";
-		echo "ss1: $ss1<br/>";
-		echo "ss2: $ss2<br/>";
-		echo "ss: $ss<br/>";
+		// $t3 = microtime(true);
+		// $ss1 = $t2 - $t1;
+		// $ss2 = $t3 - $t2;
+		// $ss = $t3-$t1;
+		// echo "s1: $t1<br/>";
+		// echo "s2: $t2<br/>";
+		// echo "s3: $t3<br/>";
+		// echo "ss1: $ss1<br/>";
+		// echo "ss2: $ss2<br/>";
+		// echo "ss: $ss<br/>";
 	}
 
 	public function del_gcm_reg_id($del_id) 

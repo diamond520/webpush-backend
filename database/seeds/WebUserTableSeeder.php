@@ -11,6 +11,6 @@ class WebUserTableSeeder extends Seeder
      */
     public function run()
     {
-    	factory(App\Models\WebUser::class, 9999)->create();
+    	factory(App\Models\WebUser::class, 1999)->create();
     }
 }
