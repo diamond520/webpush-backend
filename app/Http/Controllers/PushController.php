@@ -22,6 +22,7 @@ class PushController extends Controller
 
 	public function add(Request $request)
 	{
+		$t1 = microtime(true);
 		if (! $request->isMethod('post')) {
 			// is not post redirect to url: /
 			return ;
@@ -37,7 +38,7 @@ class PushController extends Controller
 					->withErrors($validator)
 					->withInput();
 		}
-
+		$t2 = microtime(true);
 		$push = new Push;
 		$push->title = $request->input('title');
 		$push->body = $request->input('body');
@@ -46,9 +47,26 @@ class PushController extends Controller
 		$push->pusher_id = Auth::user()->id;
 
 		$push->save();
-
+		$t3 = microtime(true);
 		$this->send_push();
 
+		$t4 = microtime(true);
+
+		$tt1 = ($t2 - $t1);
+		$tt2 = ($t3 - $t2);
+		$tt3 = ($t4 - $t3);
+		$tt = ($t4 - $t1);
+
+		echo "$t1<br/>";
+		echo "$t2<br/>";
+		echo "$t3<br/>";
+		echo "$t4<br/>";
+		echo "<br/>";
+		echo "$tt1<br/>";
+		echo "$tt2<br/>";
+		echo "$tt3<br/>";
+		echo "exec time(s) : $tt";
+		return;
 		return Redirect::to('/dashboard/'.$push->id);
 	}
 
@@ -68,6 +86,7 @@ class PushController extends Controller
 
 	public function send_push()
 	{
+		$t1 = microtime(true);
 		$apiKey = "AIzaSyAnqDQhjNQiXO_PdO6-uU5uFH6reH6Cims";
 		$users = DB::table('web_user')
 						->select(DB::raw('registation_id as id'))
@@ -75,12 +94,14 @@ class PushController extends Controller
 		$count = $users->count();
 		$ids = $users->get();
 
-		$sendMax = 10;  
+		$sendMax = 1000;  
 		$sendLoop = ceil($count / $sendMax);
+
+		$t2 = microtime(true);
 
 		for($i = 0 ; $i < $sendLoop ; $i++)
 		{
-			$regID = array();
+			$regID = [];
 			for($j=0 ; $j < $sendMax ; $j++)
 			{
 				$index = ($i * $sendMax) + $j;
@@ -94,22 +115,34 @@ class PushController extends Controller
 					break;
 				}
 			}
+			$del_id = [];
 			$del = $this->send_push_notification($regID);
-			foreach ($del as $key => $del_id) {
-				// echo "<pre>";
-				// print_r( $ids[0]);
-				// echo $sendMax*$i+$del_id;
-				// echo "<br>";
-				// echo "cc: $sendMax*$i+$key";
-				// var_dump( $ids[$sendMax*$i+$del_id] );
-				$this->del_gcm_reg_id($ids[$sendMax*$i+$del_id]);
+			
+			foreach ($del as $key => $val) {
+				array_push($del_id, $ids[$sendMax*$i+$val]->id);
+			}
+
+			if (count($del_id)>0)
+			{
+				$this->del_gcm_reg_id($del_id);
 			}
 		}
+		$t3 = microtime(true);
+		$ss1 = $t2 - $t1;
+		$ss2 = $t3 - $t2;
+		$ss = $t3-$t1;
+		echo "s1: $t1<br/>";
+		echo "s2: $t2<br/>";
+		echo "s3: $t3<br/>";
+		echo "ss1: $ss1<br/>";
+		echo "ss2: $ss2<br/>";
+		echo "ss: $ss<br/>";
 	}
 
 	public function del_gcm_reg_id($del_id) 
 	{
-		WebUser::where('registation_id', $del_id->id)->delete();
+		// print_r($del_id);
+		WebUser::whereIn('registation_id', $del_id)->delete();
 	}
 
 	public function send_push_notification($registation_id) 
@@ -144,7 +177,7 @@ class PushController extends Controller
 		$result = json_decode($response)->results;
 		$unregcnt = count($result);
 
-		$del = array();
+		$del = [];
 
 		foreach ($result as $key => $value) {
 			// echo $key;
