@@ -49,11 +49,11 @@ class PushController extends Controller
 
 		$push->save();
 
-		// $this->send_push();
-        $job = (new SendPush());
-        $this->dispatch($job);
+		$this->send_push($push->id);
+        // $job = (new SendPush());
+        // $this->dispatch($job);
 
-		return 'done';
+		// return 'done';
 		return Redirect::to('/dashboard/'.$push->id);
 	}
 
@@ -71,7 +71,7 @@ class PushController extends Controller
 		return $push;
 	}
 
-	public function send_push()
+	public function send_push($push_id)
 	{
 		// $t1 = microtime(true);
 		$apiKey = "AIzaSyAnqDQhjNQiXO_PdO6-uU5uFH6reH6Cims";
@@ -103,7 +103,7 @@ class PushController extends Controller
 				}
 			}
 			$del_id = [];
-			$del = $this->send_push_notification($regID);
+			$del = $this->send_push_notification($regID, $push_id);
 			
 			foreach ($del as $key => $val) {
 				array_push($del_id, $ids[$sendMax*$i+$val]->id);
@@ -132,7 +132,7 @@ class PushController extends Controller
 		WebUser::whereIn('registation_id', $del_id)->delete();
 	}
 
-	public function send_push_notification($registation_id) 
+	public function send_push_notification($registation_id, $push_id) 
 	{
 		// fcm endpoint
 		$url = 'https://fcm.googleapis.com/fcm/send';
@@ -161,7 +161,8 @@ class PushController extends Controller
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
 		$response = curl_exec($ch);
-		$result = json_decode($response)->results;
+		$response = json_decode($response);
+		$result = $response->results;
 		$unregcnt = count($result);
 
 		$del = [];
@@ -172,7 +173,11 @@ class PushController extends Controller
 				array_push($del, $key);
 			}
 		}
-		
+		$push = Push::find($push_id);
+		$push->success += $response->success;
+		$push->failure += $response->failure;
+		$push->save();
+
 		curl_close($ch);
 		return $del;
 	}
