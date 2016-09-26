@@ -1,8 +1,12 @@
 'use strict';
 
-var GCM_API_ENDPOINT = 'https://www.mtv.com.tw/push_demo/pushServer/gcmEndPoint.php';
+var GCM_API_ENDPOINT = 'https://push.setddg.com/push/latest';
+GCM_API_ENDPOINT = 'http://localhost:8000/push/latest';
+importScripts('./js/analytics.js');
 
-console.log('Started', self);
+self.analytics.trackingId = 'UA-84589149-2';
+
+console.log('Started');
 
 self.addEventListener('install', function(event) {
   self.skipWaiting();
@@ -26,22 +30,29 @@ self.addEventListener('push', function(event) {
     }).then(function(data) {
       console.log('API data: ', data);
 
-      var title = data.title || "";
-      var message = data.message || "";
-      var icon = data.icon || "images/mtv.jpg";
-      var click_url = data.url || "https://www.mtv.com.tw/";
-      var notificationData = {
-               url: click_url
-          };
-        
-      return self.registration.showNotification(title, {
-          body: message,
-          icon: icon,
-          data: notificationData,
-      });
+      const title = data.title || [];
+      const notificationOptions = {
+        body: data.body || [],
+        icon: data.icon || "images/push.png",
+        tag: data.action || "http://www.setddg.com/"
+      };
+      // var message = data.body || [];
+      // var icon = data.icon || "images/push.png";
+      // var click_url = data.action || "http://www.setddg.com/";
+      // var notificationData = {
+      //          url: click_url
+      //     };
+      // event.waitUntil(
+      //   Promise.all([
+      //     self.registration.showNotification(title, notificationOptions), self.analytics.trackEvent('push-received')
+      //   ])
+      // );
+      return self.registration.showNotification(title, notificationOptions);
+
     }).catch(function(err) {
       console.error('A Problem occured with handling the push msg', err);
     })
+    
   );
 
 });
