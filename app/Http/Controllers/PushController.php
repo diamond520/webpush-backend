@@ -167,6 +167,7 @@ class PushController extends Controller
 		$push = Push::find($push_id);
 		$push->success += $response->success;
 		$push->failure += $response->failure;
+		$push->impression = $push->success;
 		$push->save();
 
 		curl_close($ch);
