@@ -27,9 +27,9 @@
                                 <td>{{ $i }}</td>
                                 <td>{{ $push->title }}</td>
                                 <td>{{ $push->body }}</td>
-                                <th>0</th>
-                                <th>0</th>
-                                <th>0.0</th>
+                                <th>{{ $push->impression }}</th>
+                                <th>{{ $push->click }}</th>
+                                <th>{{ ($push->impression) ? number_format(($push->click/$push->impression)*100, 2) : 0 }}</th>
                                 <td>{{ $push->created_at }}</td>
                             </tr>
                             <?php $i++; ?>

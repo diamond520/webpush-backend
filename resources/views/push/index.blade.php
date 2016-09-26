@@ -24,7 +24,7 @@
                             <p id="x">x</p>
                             <p id="push-title" alt="title" placeholder="標題">標題</p>
                             <p id="push-message" alt="body" placeholder="內文">內文</p>
-                            <p id="push-url">https://www.mtv.com.tw</p>
+                            <p id="push-url">https://www.setddg.com</p>
                         </div>
                     </div>
                 </div>

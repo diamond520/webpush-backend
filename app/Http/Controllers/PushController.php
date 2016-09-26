@@ -50,10 +50,7 @@ class PushController extends Controller
 		$push->save();
 
 		$this->send_push($push->id);
-        // $job = (new SendPush());
-        // $this->dispatch($job);
 
-		// return 'done';
 		return Redirect::to('/dashboard/'.$push->id);
 	}
 
@@ -68,6 +65,8 @@ class PushController extends Controller
 	{
 		$push = Push::orderBy('id', 'desc')
 						->first();
+		// $push->impression++;
+		// $push->save();
 		return $push;
 	}
 
@@ -114,16 +113,6 @@ class PushController extends Controller
 				$this->del_gcm_reg_id($del_id);
 			}
 		}
-		// $t3 = microtime(true);
-		// $ss1 = $t2 - $t1;
-		// $ss2 = $t3 - $t2;
-		// $ss = $t3-$t1;
-		// echo "s1: $t1<br/>";
-		// echo "s2: $t2<br/>";
-		// echo "s3: $t3<br/>";
-		// echo "ss1: $ss1<br/>";
-		// echo "ss2: $ss2<br/>";
-		// echo "ss: $ss<br/>";
 	}
 
 	public function del_gcm_reg_id($del_id) 
@@ -171,7 +160,7 @@ class PushController extends Controller
 
 		foreach ($result as $key => $value) {
 			// echo $key;
-			if ( isset($value->error) ) {
+			if ( isset($value->error) && in_array($value->error, array('NotRegistered', 'InvalidRegistration'))) {
 				array_push($del, $key);
 			}
 		}

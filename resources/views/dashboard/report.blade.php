@@ -14,15 +14,15 @@
                             <p id="x">x</p>
                             <p id="push-title">{{ $push->title }}</p>
                             <p id="push-message">{{ $push->body }}</p>
-                            <p id="push-url">https://www.mtv.com.tw</p>
+                            <p id="push-url">https://www.setddg.com</p>
                         </div>
                     </div>
                     <table id="datatable" class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <!-- <th>GCM success</th>
-                                <th>GCM fail</th> -->
+                                <th>GCM success</th>
+                                <th>GCM fail</th>
                                 <th>露出</th>
                                 <th>點擊</th>
                                 <th>點擊率(%)</th>
@@ -31,8 +31,8 @@
                         <tbody>
                             <tr>
                                 <th>#</th>
-                                <!-- <th>GCM success</th>
-                                <th>GCM fail</th -->
+                                <th>{{ $push->success }}</th>
+                                <th>{{ $push->failure }}</th>
                                 <th>{{ $push->impression }}</th>
                                 <th>{{ $push->click }}</th>
                                 <th>{{ ($push->impression) ? number_format(($push->click/$push->impression)*100, 2) : 0 }}</th>
