@@ -140,7 +140,9 @@ class PushController extends Controller
 		$registation_ids = $registation_id;
 		
 		$data = 'data';
-
+  // "data": {
+  //   "message": "This is a Firebase Cloud Messaging Topic Message!",
+  //  }
 		$fields = array(
 			'registration_ids' => $registation_ids,
 			'data' => array("data" => $data),

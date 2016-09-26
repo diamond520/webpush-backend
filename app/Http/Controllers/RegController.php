@@ -25,4 +25,23 @@ class RegController extends Controller
 
         return $user;
     }
+
+    // 取得 client_id status
+    public function get_user($client_id)
+    {
+        $user = WebUser::where('registation_id', $client_id)->first();
+
+        return $user;
+    }
+
+    // unsub gcm id
+    public function unsubscribe($client_id)
+    {
+        $user = WebUser::where('registation_id', $client_id)->first();
+        $user->state = 0;
+        $user->save();
+
+        return $user;
+    }
+
 }

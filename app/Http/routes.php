@@ -25,48 +25,43 @@ Route::get('/', function () {
 
 //Route::auth();
 
-    Route::get('login', 'Auth\AuthController@showLoginForm');
-    Route::post('login', 'Auth\AuthController@login');
-    Route::get('logout', 'Auth\AuthController@logout');
+Route::get('login', 'Auth\AuthController@showLoginForm');
+Route::post('login', 'Auth\AuthController@login');
+Route::get('logout', 'Auth\AuthController@logout');
 
-    // Registration Routes...
-    Route::get('register', 'Auth\AuthController@showRegistrationForm');
-    Route::post('register', 'Auth\AuthController@register');
+// Registration Routes...
+Route::get('register', 'Auth\AuthController@showRegistrationForm');
+Route::post('register', 'Auth\AuthController@register');
 
-    // Password Reset Routes...
-    Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-    Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\PasswordController@reset');
+// Password Reset Routes...
+Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+Route::post('password/reset', 'Auth\PasswordController@reset');
 
 Route::get('/home', 'HomeController@index');
 
-// Route::get('/dashboard', 'PushController@index');
-
-// Route::group(['before'=>'auth'], function(){
-//     Route::get('post', 'HomeController@index');
-//     Route::get('post/create', 'HomeController@create');
-//     Route::post('post', 'HomeController@store');
-//     Route::get('post/{id}', 'HomeController@show');
-//     Route::get('post/{id}/edit', 'HomeController@edit');
-//     Route::put('post/{id}', 'HomeController@update');
-//     Route::delete('post/{id}', 'HomeController@destroy');
-// });
-
+// 報表
 Route::group(['prefix' => 'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/', 'ReportController@index');
     Route::get('/{push_id}', 'ReportController@detail');
 });
 
-
-Route::get('/push/get/{push_id}', 'PushController@get_push');
-//Route::get('/push/latest', 'PushController@latest');
-
+// 新增推播
 Route::group(['prefix' => 'push', 'middleware'=>'auth'], function(){
     Route::get('/', 'PushController@index');
     Route::post('/add', 'PushController@add');
-//    Route::get('/get/{push_id}', 'PushController@get_push');
     Route::get('/test', 'PushController@send_push');
 });
+
+// 新增 client_id 訂閱
 Route::get('/reg/{client_id}', ['middleware' => 'cors','uses' => 'RegController@reg']);
+
+// 取消 client_id 訂閱
+Route::get('/unsub/{client_id}', ['middleware' => 'cors','uses' => 'RegController@unsubscribe']);
+
+// 取得 push_id 推播
+Route::get('/push/get/{push_id}', 'PushController@get_push');
+
+// 取得最新一筆推播內容
 Route::get('/push/latest', ['middleware' => 'cors','uses' => 'PushController@latest']);
 //Route::get('/reg/{client_id}', 'RegController@reg');

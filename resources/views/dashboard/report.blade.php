@@ -10,7 +10,7 @@
                 <div class="panel-body">
                     <div id="container">
                         <div id="push">
-                            <img id="push-icon" src="{{ ($push->icon) ? $push->icon: '/images/push.png' }}">
+                            <img id="push-icon" src="{{ $push->icon or '/images/push.png' }}">
                             <p id="x">x</p>
                             <p id="push-title">{{ $push->title }}</p>
                             <p id="push-message">{{ $push->body }}</p>
