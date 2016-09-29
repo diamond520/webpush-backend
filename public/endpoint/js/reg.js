@@ -11,12 +11,10 @@ if ('serviceWorker' in navigator) {
       var endpoint = sub.endpoint.substr(sub.endpoint.lastIndexOf('/') + 1) ;
       // var url = 'GCMreg.php';
       var url = 'https://push.setddg.com/reg/'+endpoint;
-      url = 'http://localhost:8000/reg/'+endpoint;
+      //url = 'http://localhost:8000/reg/'+endpoint;
       $.getJSON(url, endpoint, function(){
         console.log('done');
       });
-      // location.href="https://www.mtv.com.tw/push_demo/pushServer/endPointReg.php?gcmRegID="+endpoint;
-
     });
   }).catch(function(error) {
     console.log('Service Worker error :^(', error);
