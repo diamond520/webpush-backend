@@ -1,7 +1,7 @@
 'use strict';
 
 var GCM_API_ENDPOINT = 'https://push.setddg.com/push/latest';
-GCM_API_ENDPOINT = 'http://localhost:8000/push/latest';
+// GCM_API_ENDPOINT = 'http://localhost:8000/push/latest';
 importScripts('./js/analytics.js');
 
 self.analytics.trackingId = 'UA-84589149-2';

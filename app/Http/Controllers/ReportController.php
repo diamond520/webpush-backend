@@ -22,7 +22,7 @@ class ReportController extends Controller
     public function detail($push_id)
     {
         $push = Push::where('id', $push_id)->first();
-        // return $push;
+        // return $push->icon;
         return view('dashboard.report', ['push' => $push]);
     }
 }
