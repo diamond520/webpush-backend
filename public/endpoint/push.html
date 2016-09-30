@@ -1,51 +1,62 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SETTV Push Subscribe</title>
+    <link rel="icon" href="http://rs.setddg.com/website/uploads/website_1/zh-tw/favicon_1.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://rs.setddg.com/website/uploads/website_1/zh-tw/favicon_1.ico" type="image/x-icon" />
+    <link rel="bookmark" href="http://rs.setddg.com/website/uploads/website_1/zh-tw/favicon_1.ico" type="image/x-icon" />
+    <title>SEDDG Push Subscribe</title>
     <link href="./css/push.css" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
-    <div id = "container">
+    <div class="container">
         <!-- <div class="title domainName"><?php echo $protocol?>://<?php echo $domain;?></div>
-        <p id="mobile-directions">接受網站推播，參與網站互動。</p> -->
-
-        <div id="m-push">
-            <img id="m-push-icon" src="./images/push.png">
-            <p id="m-push-title" class="truncatable long desktop message">想傳送推播通知給您。</p>
-            <p id="m-push-message" class="truncatable short desktop message">訊息會以這個形式出現</p>
-            <p id="m-push-url" class="truncatable short desktop message"></p>
+        <p class="mobile-directions">接受網站推播，參與網站互動。</p> -->
+        <div class="m-push">
+            <div class="m-push-icon"><img src="./images/ddg.png"></div>
+            <p class="m-push-title" class="truncatable long desktop message">電電購想傳送推播通知給您。</p>
+            <p class="m-push-message" class="truncatable short desktop message">訊息會以這個形式出現</p>
+            <p class="m-push-url" class="truncatable short desktop message"></p>
         </div>
-
-        <div id="push">
-            <img id="push-icon" src="./images/push.png">
-            <p id="x">x</p>
-            <p id="push-title">想傳送推播通知給您。</p>
-            <p id="push-message">訊息會以這個形式出現</p>
-            <p id="push-url"></p>
+        <div class="push">
+            <div class="push-icon"><img src="./images/ddg.png"></div>
+            <p class="x">x</p>
+            <p class="push-title">電電購想傳送推播通知給您。</p>
+            <p class="push-message">訊息會以這個形式出現</p>
+            <p class="push-url"></p>
         </div>
-    </div> 
+    </div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="js/ua.js"></script>
     <script src="js/reg.js"></script>
-        <script type="text/javascript">
-        function detectmob() {
-            return navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i) != null;
-        }
+    <script type="text/javascript">
+    function detectmob() {
+        return navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i) != null;
+    }
 
-        /* show mobile example notification on mobile, desktop notification on desktop */
-        if (detectmob()) {
-            document.getElementById("push").style.display = 'none';
-        } else {
-            document.getElementById("m-push").style.display = "none";
-        }
-
-        var origin = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
-        var el = document.querySelectorAll("p[id*='push-url']");
-        el.forEach(function(item, index){
-            item.innerHTML = origin;
+    /* show mobile example notification on mobile, desktop notification on desktop */
+    if (detectmob()) {
+        [].forEach.call(document.getElementsByClassName('push'), function(v, i, a) {
+            v.style.display = 'none'
         });
+
+        //forEach( el => el.style.display = 'none');
+    } else {
+        [].forEach.call(document.getElementsByClassName('m-push'), function(v, i, a) {
+            v.style.display = 'none'
+        });
+    }
+
+    var origin = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+    var el = document.querySelectorAll("p[class*='push-url']");
+    el.forEach(function(item, index) {
+        item.innerHTML = origin;
+    });
     </script>
 </body>
+
 </html>
